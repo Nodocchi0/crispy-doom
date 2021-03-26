@@ -856,11 +856,16 @@ A_FireCGun
   pspdef_t*	psp ) 
 {
     if (!player) return; // [crispy] let pspr action pointers get called from mobj states
-    S_StartSound (player->so, sfx_pistol); // [crispy] weapon sound source
+
+    if (!crispy->soundfix)
+        S_StartSound (player->so, sfx_pistol); // [crispy] weapon sound source
 
     if (!player->ammo[weaponinfo[player->readyweapon].ammo])
 	return;
-		
+
+    if (crispy->soundfix)
+        S_StartSound (player->so, sfx_pistol);
+
     P_SetMobjState (player->mo, S_PLAY_ATK2);
     DecreaseAmmo(player, weaponinfo[player->readyweapon].ammo, 1);
 
